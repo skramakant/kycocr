@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <title>Voucher Automation</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6" style="border-right: 1px solid black;height:100%;">
+                    <h1>Input</h1>
+                    <hr>
+                    <div class="row">
+                        <h4>Voucher Image</h4>
+                        {% if file_location%}
+                            <img class="img-responsive" src="{{file_location}}" alt="template" width="70%" height="30%">
+                        {% else %}
+                            <img class="img-responsive" src="{{ url_for('static', filename='computer_vision.jpg') }}" alt="template" width="70%" height="30%">
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        {% if file_location%}
+                            <h4>process Voucher</h4>
+                            <form action="/process" method="post">
+                                <input type="text" name = name value="{{file_name}}">
+                                <button type="submit" value="process" class="btn btn-default">Process</button>
+                            </form>
+                        {% else %}
+                            <!--<h3></h3>-->
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <h4>Upload The Voucher</h4>
+                      <form action="/upload" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <!--<label>File:</label>-->
+                            <input type=file name=file class="form-control">
+                        </div>
+                        <button type="submit" value="upload" class="btn btn-default">Upload</button>
+                      </form>
+                    </div>
+                </div>
+                <!--<div class="col-sm-2" style="border: 1px solid black;height: 500px;"></div>-->
+                <div class="col-sm-6" style="padding-left:25px;">
+                    <h1>Output</h1>
+                    <hr>
+                    <!--<div class="row">-->
+                        <!--<h4>Original Image</h4>-->
+                        <!--{% if file_location%}-->
+                            <!--<img class="img-responsive" src="{{file_location}}" alt="template" width="60%" height="30%">-->
+                        <!--{% else %}-->
+                            <!--<h4>NO IMAGE</h4>-->
+                        <!--{% endif %}-->
+                    <!--</div>-->
+                    <!--<hr>-->
+                    <div class="row">
+                        <h4>Stage1</h4>
+                        {% if processed_file_stage1%}
+                            <img class="img-responsive" src="{{processed_file_stage1}}" alt="template" width="60%" height="30%">
+                        {% else %}
+                            <h4>NO IMAGE</h4>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Stage2</h4>
+                        {% if processed_file_stage2%}
+                            <img class="img-responsive" src="{{processed_file_stage2}}" alt="template" width="60%" height="30%">
+                        {% else %}
+                            <h4>NO IMAGE</h4>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Stage3</h4>
+                        {% if all_cropped_file_path %}
+                            <ul class="list-inline">
+                                {% for char_path in all_cropped_file_path %}
+                                    <li><img class="img-responsive" src="{{char_path}}" alt="cropped"></li>
+                                <!--<li>{{ char_path.name }}</li>-->
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Stage4</h4>
+                        {% if account_number %}
+                            <h2> Account Number </h2>
+                            <h3>{{account_number}}</h3>
+                        {% endif %}
+                        {% if date %}
+                            <h2> Date </h2>
+                            <h3>{{date}}</h3>
+                        {% endif %}
+                        {% if mobile %}
+                            <h2> Mobile </h2>
+                            <h3>{{mobile}}</h3>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
